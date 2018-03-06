@@ -1,0 +1,24 @@
+<h3> Welcome to my Shopping Site </h3>
+<div class = "table-responsive">
+    <table class="table table-condensed">
+        <thead>
+            <tr> 
+                <th ng-click = "Sort('Name')">Name</th>
+                <th ng-click = "Sort('Description')">Description</th>
+                <th ng-click = "Sort('Price')">Price</th>
+                <th ng-click = "Sort('Quantity')"> Available Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="product in $parent.products | orderBy: column:reverse" ng-init="product.outOfStock = false">
+                <td class= "prodName" >{{product.Name}}</td>
+                <td class= "prodName">{{product.Description}}</td>
+                <td> {{product.Price| currency}}</td>
+                <td> {{product.Quantity}}</td>
+                <td><button ng-class="{'btn-default': !product.outOfStock, 'btn-danger': product.outOfStock}" 
+                    ng-disabled="product.outOfStock" ng-click="addToCart(product)" >Add To Cart</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div> 

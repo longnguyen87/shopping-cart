@@ -1,0 +1,182 @@
+<h3> {{user.userName}}'s Page</h3>
+<ul>
+    <a> <li ng-click="displayproduct()"> Products</li> </a>
+    <a> <li ng-click="displayOrders()"> Orders</li> </a>
+    <a> <li ng-click="displayUser()"> Users</li> </a>
+</ul> 
+<!-- table products -->
+
+<div class = "table-responsive" ng-show ="adminProductTbl">
+    <button ng-click= "showAddProductTbl()">Add New Product</button>
+        <table class="table table-condensed" >
+            <thead>
+                <tr> 
+                    <th ng-click = "Sort('Name')">Name</th>
+                    <th ng-click = "Sort('Description')">Description</th>
+                    <th ng-click = "Sort('Price')">Price</th>
+                    <th ng-click = "Sort('Quantity')"> Available Quantity</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in $parent.products | orderBy: column:reverse" ng-init = "product.disabled = true">
+                    <td class= "prodName">
+                        <input type="text" ng-model = "product.Name" ng-disabled="product.disabled"></td>
+                    <td class= "prodName"> 
+                        <input type="text" ng-model = "product.Description" ng-disabled="product.disabled"></td>
+                    <td> <input type="number" step ="0.01" ng-model = "product.Price" ng-disabled="product.disabled"></td>
+                    <td> <input type="text" ng-model = "product.Quantity" ng-disabled="product.disabled"></td>
+                    <td><button ng-click="product.disabled = !(product.disabled)" >Edit</button></td>
+                    <td><button ng-disabled = "product.disabled" ng-class="{'btn-warning': !product.disabled, 
+                        'btn-success': product.disabled}" ng-click="updateProduct(product)">Update</button></td>
+                    <td><button ng-click="deleteProduct(product)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+</div> 
+
+<!-- table orders -->
+<div class = "table-responsive" ng-show ="adminOrderTbl">
+    <table class="table table-condensed" >
+        <thead>
+            <tr> 
+                <th ng-click = "Sort('_id')">Order ID</th>
+                <th >Items</th>
+                <th ng-click = "Sort('orderTotal')">Order Total</th>
+                <th ng-click = "Sort('timestamp')"> Order Time</th>
+                <th ng-click = "Sort('orderStatus')"> Order Status</th>
+                <th ng-click = "Sort('userName')"> User</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="order in $parent.orders | orderBy: column:reverse" >
+                <td >{{order._id}}</td>
+                <td>
+                    <ol ng-repeat="item in order.items">
+                        <li>Order Quantity: {{item.Quantity}}</li>
+                        <li>Name: {{item.product.Name}}</li>
+                        <li>Description: {{item.product.Description}}</li>
+                        <li>Price: {{item.product.Price}}</li>
+                        <li>--------------------------------------</li>
+                    </ol>
+                </td>
+                <td >{{order.orderTotal |currency}}</td>
+                <td> {{order.timestamp}} </td>
+                <td> {{order.orderStatus}}</td>
+                <td> {{order.userName}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- table users -->
+<div class = "table-responsive" ng-show ="adminUserTbl">
+    <table class="table table-condensed">
+        <thead>
+            <tr> 
+                <th ng-click = "Sort('userName')">User Name</th>
+                <th ng-click = "Sort('Email')">Email</th>
+                <th ng-click = "Sort('Role')">Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in $parent.users | orderBy: column:reverse">
+                <td>{{user.userName}}</td>
+                <td>{{user.Email}}</td>
+                <td> {{user.Role}}</td>
+                <td><button ng-click="viewUser(user)" >View</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class = "table-responsive" ng-show ="adminViewUserOrderTbl">
+    <table class="table table-condensed" >
+        <thead>
+            <tr> 
+                <th ng-click = "Sort('_id')">Order ID</th>
+                <th >Items</th>
+                <th ng-click = "Sort('orderTotal')">Order Total</th>
+                <th ng-click = "Sort('timestamp')"> Order Time</th>
+                <th ng-click = "Sort('orderStatus')"> Order Status</th>
+                <th ng-click = "Sort('userName')"> User</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="order in $parent.userView.orderDetail | orderBy: column:reverse" ng-init="order.disabled = true" >
+                <td >{{order._id}}</td>
+                <td>
+                    <ol ng-repeat="item in order.items">
+                        <li>Order Quantity: {{item.Quantity}}</li>
+                        <li>Name: {{item.product.Name}}</li>
+                        <li>Description: {{item.product.Description}}</li>
+                        <li>Price: {{item.product.Price}}</li>
+                        <li>--------------------------------------</li>
+                    </ol>
+                </td>
+                <td ng-hide="!(order.disabled)">{{order.orderTotal |currency}} </td>
+                <td  ng-hide="order.disabled"><input type="number" step = "any" ng-model= "order.orderTotal"></td>
+                <td> {{order.timestamp}} </td>
+                <td> <input type="text" ng-disabled="order.disabled" ng-model="order.orderStatus"> </td>
+                <td> {{order.userName}}</td>
+                <td><input type="button" ng-click = "order.disabled = !order.disabled" value ="Edit"></td>
+                <td><input type="button" ng-disabled = "order.disabled" ng-class="{'btn-warning': !order.disabled, 
+                    'btn-success': order.disabled}" ng-click = "updateOrder (order)" value = "Update"></td>
+                <td><input type="button" ng-click = "deleteOrder (order)" value = "Delete"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class = "table-responsive" ng-show="adminAddProductTbl">
+        <table class="table table-condensed">
+            <tbody>
+                <tr>
+                    <td>Category: </td>
+                    <td>
+                        <input type ="text" ng-model = "$parent.productCategory" placeholder= "Category" required >
+                    </td>
+                </tr>
+                <tr>
+                    <td>Name: </td>
+                    <td>
+                        <input type = "text" ng-model = "$parent.productName" required 
+                            placeholder= "Name"> <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description: </td>
+                    <td>
+                        <input type = "text" ng-model = "$parent.productDescription" required 
+                            placeholder= "Description"> <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Price: </td>
+                    <td>
+                        <input type = "number" step ="any" ng-model = "$parent.productPrice" required 
+                            placeholder= "Price"> <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Quantity: </td>
+                    <td>
+                        <input type = "number" ng-model = "$parent.productQuantity" required 
+                            placeholder= "Quantity"> <br/>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td> 
+                        <input type = "submit" value ="Save" class="btn btn-success" ng-click="addProduct()">
+                        <input type = "button" value = "Cancel" class="btn btn-danger" ng-click="displayproduct()">
+                    </td>  
+                </tr>  
+            </tfoot>
+        </table>    
+    </div>

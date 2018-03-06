@@ -1,0 +1,44 @@
+<h3>Please Signup </h3>
+<div class = "table-responsive">
+    <table class="table table-condensed">
+        <tbody>
+            <tr>
+                <td>User Name: </td>
+                <td>
+                    <input type = "text" ng-model = "$parent.userName" required 
+                        placeholder= "Enter last name">
+                </td>
+            </tr>
+            <tr>
+                <td>Email: </td>
+                <td>
+                    <input type = "email" ng-model = "$parent.email" required 
+                        placeholder= "Enter your email"> 
+            </tr>
+            <tr>
+                <td>Password: </td>
+                <td>
+                    <input type = "password" ng-model = "$parent.password" required 
+                        placeholder= "Enter password"> 
+                </td>
+            </tr>
+            <tr>
+                <td>Confirm password: </td>
+                <td>
+                    <input type = "password" ng-model = "$parent.confirmPass" required 
+                        placeholder= "Confirm Password">
+                </td>
+            </tr>
+        </tbody>
+        <tfooter>
+            <tr>
+                <td></td>
+                <td> 
+                    <input type = "button" value ="Register" class="btn btn-success" ng-click = "registerSubmit()">
+                    <input type = "button" value = "Cancel" class="btn btn-warning" ng-click="cancelRegister()">  
+                </td>  
+            </tr>  
+        </tfooter>
+    </table> 
+  
+</div>

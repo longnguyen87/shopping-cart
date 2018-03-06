@@ -1,0 +1,36 @@
+<div class = "table-responsive">
+<h3> {{user.userName}}'s Orders</h3>
+<table ng-show ="displayTable" class = "table table-condensed">
+    <thead>
+        <tr>
+            <th>Past Order</th>
+            <th>Order Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <ul ng-repeat="order in user.PastOrders">
+                    <a> <li ng-click="displayOrder(order)"> {{order}}</li> </a> 
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Order Date: {{orderDetail.timestamp | date:'yyyy-MM-dd HH:mm:ss a'}}</li> 
+                    <li>Order Total: {{orderDetail.orderTotal |currency:'$'}}</li>
+                    <li>Order Status: {{orderDetail.orderStatus}} </li>
+                    <li>Items Purchased:</li>
+                    <ol ng-repeat= "item in orderDetail.items"> 
+                        <li> Product name: {{item.product.Name}}</li>
+                        <li> Product Description: {{item.product.Description}}</li>
+                        <li> Product Price: {{item.product.Price | currency:'$'}}</li>
+                        <li> Order Quantity: {{item.Quantity}}</li>
+                        <span>___________________________________________________</span>
+                    </ol>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p ng-show= "displayNotification"> You do not have any order yet!</p>
+</div>

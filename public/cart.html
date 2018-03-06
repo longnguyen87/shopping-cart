@@ -1,0 +1,27 @@
+<div id="cartsContainer">
+    <div class="listItem" ng-repeat="item in $parent.user.ItemsInCart" 
+      ng-init="product=item.product">
+      <span class="prodName">{{product.Name}} - {{product.Description}}</span>
+      <span >
+        <span class="price">{{product.Price|currency}}</span>
+        <input class="quantity" type="text" disabled ng-model="item.Quantity" />
+        <label class="quantity"> Order Quantity</label>
+        <span class="delete" 
+              ng-click="removeItem(item)">Remove</span>
+      </span>
+    </div>
+    <hr> 
+     <div class="cartTotal">
+      <span>Total</span>
+      <span class="price">{{$parent.total|currency}}</span>
+     </div>
+     <hr>
+    <div>
+        <button class="btn-default" ng-click="submitOrder()" >
+          Submit Order
+        </span>
+        <button class="btn-default" ng-click="setContent('products.html')">
+          Continue Shopping
+        </span>
+    </div>
+  </div>
